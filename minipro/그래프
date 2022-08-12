@@ -1,3 +1,21 @@
+static public string strConn = "Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)" +
+               "(HOST=localhost)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=xe)));" +
+               "User Id=system;Password=20161268;";
+        OracleCommand cmd = new OracleCommand();
+        OracleDataReader rdr;
+        OracleConnection conn;
+        int WHITE = 0;
+        int RED = 0;
+        int BLACK = 0;
+        int SMALL = 0;
+        int MEDIUM = 0;
+        int LARGE = 0;
+        int JEAN = 0;
+        int COTTON = 0;
+        int POLYESTER = 0;
+        int WINTER = 0;
+        int SUMMER = 0;
+        
         private void button4_Click(object sender, EventArgs e)
         {
             Color[] colors = new Color[16];
@@ -25,35 +43,27 @@
             cmd.Connection = conn;
             cmd.CommandText = "select * from PRODUCT_COUNT WHERE ID_P = 1";
             rdr = cmd.ExecuteReader();
-            int WHITE = 0;
-            int RED = 0;
-            int BLACK = 0;
-            int SMALL = 0;
-            int MEDIUM = 0;
-            int LARGE = 0;
-            int JEAN = 0;
-            int POLYESTER = 0;
-            int WINTER = 0;
-            int SUMMER = 0;
+           
             while (rdr.Read())
             {
-                WHITE =  int.Parse(rdr["WHITE_P"].ToString());
-                RED =    int.Parse(rdr["RED_P"].ToString());
-                BLACK =  int.Parse(rdr["BLACK_P"].ToString());
-                SMALL =  int.Parse(rdr["SMALL_P"].ToString());
-                MEDIUM = int.Parse(rdr["MEDIUM_P"].ToString());
-                LARGE =  int.Parse(rdr["LARGE_P"].ToString());
-                JEAN =   int.Parse(rdr["JEAN_P"].ToString());
-                POLYESTER = int.Parse(rdr["POLYESTER_P"].ToString());
-                WINTER = int.Parse(rdr["WINTER_P"].ToString());
-                SUMMER = int.Parse(rdr["SUMMER_P"].ToString());
+                WHITE = Int32.Parse(rdr["WHITE_P"].ToString());
+                RED = Int32.Parse(rdr["RED_P"].ToString());
+                BLACK = Int32.Parse(rdr["BLACK_P"].ToString());
+                SMALL = Int32.Parse(rdr["SMALL_P"].ToString());
+                MEDIUM = Int32.Parse(rdr["MEDIUM_P"].ToString());
+                LARGE = Int32.Parse(rdr["LARGE_P"].ToString());
+                JEAN = Int32.Parse(rdr["JEAN_P"].ToString());
+                COTTON = Int32.Parse(rdr["COTT0N_P"].ToString());
+                POLYESTER = Int32.Parse(rdr["POLYESTER_P"].ToString());
+                WINTER = Int32.Parse(rdr["WINTER_P"].ToString());
+                SUMMER = Int32.Parse(rdr["SUMMER_P"].ToString());
             }
             
             int[][] values = new int[4][];
-            values[0] = new int[] { WHITE, RED, BLACK, SMALL, LARGE, JEAN, POLYESTER, WINTER, SUMMER };
-            values[1] = new int[] { WHITE, RED, BLACK, SMALL, LARGE, JEAN, POLYESTER, WINTER, SUMMER };
-            values[2] = new int[] { WHITE, RED, BLACK, SMALL, LARGE, JEAN, POLYESTER, WINTER, SUMMER };
-            values[3] = new int[] { WHITE, RED, BLACK, SMALL, LARGE, JEAN, POLYESTER, WINTER, SUMMER };
+            values[0] = new int[] { WHITE, RED, BLACK  };
+            values[1] = new int[] { SMALL, MEDIUM, LARGE };
+            values[2] = new int[] { JEAN, COTTON, POLYESTER };
+            values[3] = new int[] { WINTER, SUMMER };
             int maxNum = 0;
             for (int i = 0; i < 4; i++)
             {
@@ -90,5 +100,3 @@
             chart1.Series[0].Points[2].AxisLabel = "재질";
             chart1.Series[0].Points[3].AxisLabel = "계절";
         }
-    }
-}
