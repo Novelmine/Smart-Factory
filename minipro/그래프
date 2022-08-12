@@ -1,0 +1,94 @@
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Color[] colors = new Color[16];
+            int alpha = 250;
+            colors[0] = Color.FromArgb(alpha, 26, 83, 255);
+            colors[1] = Color.FromArgb(alpha, 83, 26, 255);
+            colors[2] = Color.FromArgb(alpha, 198, 26, 255);
+            colors[3] = Color.FromArgb(alpha, 255, 26, 198);
+            colors[4] = Color.FromArgb(alpha, 26, 198, 255);
+            colors[5] = Color.FromArgb(alpha, 87, 129, 255);
+            colors[6] = Color.FromArgb(alpha, 148, 175, 255);
+            colors[7] = Color.FromArgb(alpha, 255, 26, 83);
+            colors[8] = Color.FromArgb(alpha, 26, 255, 198);
+            colors[9] = Color.FromArgb(alpha, 255, 228, 148);
+            colors[10] = Color.FromArgb(alpha, 255, 213, 87);
+            colors[11] = Color.FromArgb(alpha, 255, 83, 26);
+            colors[12] = Color.FromArgb(alpha, 26, 255, 83);
+            colors[13] = Color.FromArgb(alpha, 83, 255, 26);
+            colors[14] = Color.FromArgb(alpha, 198, 255, 26);
+            colors[15] = Color.FromArgb(alpha, 255, 198, 26);
+            chart1.PaletteCustomColors = colors;
+
+            conn = new OracleConnection(strConn);
+            conn.Open();
+            cmd.Connection = conn;
+            cmd.CommandText = "select * from PRODUCT_COUNT WHERE ID_P = 1";
+            rdr = cmd.ExecuteReader();
+            int WHITE = 0;
+            int RED = 0;
+            int BLACK = 0;
+            int SMALL = 0;
+            int MEDIUM = 0;
+            int LARGE = 0;
+            int JEAN = 0;
+            int POLYESTER = 0;
+            int WINTER = 0;
+            int SUMMER = 0;
+            while (rdr.Read())
+            {
+                WHITE =  int.Parse(rdr["WHITE_P"].ToString());
+                RED =    int.Parse(rdr["RED_P"].ToString());
+                BLACK =  int.Parse(rdr["BLACK_P"].ToString());
+                SMALL =  int.Parse(rdr["SMALL_P"].ToString());
+                MEDIUM = int.Parse(rdr["MEDIUM_P"].ToString());
+                LARGE =  int.Parse(rdr["LARGE_P"].ToString());
+                JEAN =   int.Parse(rdr["JEAN_P"].ToString());
+                POLYESTER = int.Parse(rdr["POLYESTER_P"].ToString());
+                WINTER = int.Parse(rdr["WINTER_P"].ToString());
+                SUMMER = int.Parse(rdr["SUMMER_P"].ToString());
+            }
+            
+            int[][] values = new int[4][];
+            values[0] = new int[] { WHITE, RED, BLACK, SMALL, LARGE, JEAN, POLYESTER, WINTER, SUMMER };
+            values[1] = new int[] { WHITE, RED, BLACK, SMALL, LARGE, JEAN, POLYESTER, WINTER, SUMMER };
+            values[2] = new int[] { WHITE, RED, BLACK, SMALL, LARGE, JEAN, POLYESTER, WINTER, SUMMER };
+            values[3] = new int[] { WHITE, RED, BLACK, SMALL, LARGE, JEAN, POLYESTER, WINTER, SUMMER };
+            int maxNum = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                if (values[i].Length > maxNum)
+                    maxNum = values[i].Length;
+            }
+            for (int i = 0; i < maxNum; i++)
+            {
+                Series series = new Series();
+                series.ChartType = SeriesChartType.StackedBar;
+                series.BorderColor = Color.FromArgb(60, Color.Black);
+                series.BorderWidth = 1;
+                series.Color = colors[i];
+                chart1.Series.Add(series);
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < maxNum; j++)
+                {
+                    if (values[i].Length > j)
+                    {
+                       chart1.Series[j].Points.AddY(values[i][j]);
+                    }
+                    else
+                    {
+                       chart1.Series[j].Points.AddY(0);
+                    }
+                }
+            }
+            chart1.ChartAreas["ChartArea1"].Area3DStyle.Enable3D = true;
+            chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
+            chart1.Series[0].Points[0].AxisLabel = "색상";
+            chart1.Series[0].Points[1].AxisLabel = "사이즈";
+            chart1.Series[0].Points[2].AxisLabel = "재질";
+            chart1.Series[0].Points[3].AxisLabel = "계절";
+        }
+    }
+}
