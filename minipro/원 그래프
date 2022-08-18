@@ -1,0 +1,293 @@
+ private void DrawPieChart_C(Chart chart, string title, int value1, int value2, int value3)
+        {
+            chart.Series.Clear();
+            chart.Legends.Clear();
+            chart.Legends.Add("NEWLegend");
+            chart.Legends[0].LegendStyle = LegendStyle.Table;
+            chart.Legends[0].Docking = Docking.Bottom;
+            chart.Legends[0].Alignment = StringAlignment.Center;
+            chart.Legends[0].Title = title;
+
+
+            string seriesname = "MySeriesName";
+            chart.Series.Add(seriesname);
+            chart.Series[seriesname].ChartType = SeriesChartType.Pie;
+            chart.Series[seriesname].Label = "#PERCENT{P1}";
+            chart.Series[seriesname].Points.AddXY("검정", value1);
+            chart.Series[seriesname].Points.AddXY("빨강", value2);
+            chart.Series[seriesname].Points.AddXY("하양", value3);
+            chart.Series[0].Points[0].LegendText = "검정";
+            chart.Series[0].Points[1].LegendText = "빨강";
+            chart.Series[0].Points[2].LegendText = "하양";
+
+        }
+        private void DrawPieChart_M(Chart chart, string title, int value1, int value2, int value3)
+        {
+            chart.Series.Clear();
+            chart.Legends.Clear();
+            chart.Legends.Add("NEWLegend");
+            chart.Legends[0].LegendStyle = LegendStyle.Table;
+            chart.Legends[0].Docking = Docking.Bottom;
+            chart.Legends[0].Alignment = StringAlignment.Center;
+            chart.Legends[0].Title = title;
+            string seriesname = "MySeriesName";
+            chart.Series.Add(seriesname);
+            chart.Series[seriesname].ChartType = SeriesChartType.Pie;
+            chart.Series[seriesname].Points.AddXY("면", value1);
+            chart.Series[seriesname].Points.AddXY("천", value2);
+            chart.Series[seriesname].Points.AddXY("폴리에스테르", value3);
+            chart.Series[seriesname].Label = "#PERCENT{P1}";
+            chart.Series[0].Points[0].LegendText = "면";
+            chart.Series[0].Points[1].LegendText = "천";
+            chart.Series[0].Points[2].LegendText = "폴리에스테르";
+        }
+        private void DrawPieChart_S(Chart chart, string title, int value1, int value2, int value3)
+        {
+            chart.Series.Clear();
+            chart.Legends.Clear();
+            chart.Legends.Add("NEWLegend");
+            chart.Legends[0].LegendStyle = LegendStyle.Table;
+            chart.Legends[0].Docking = Docking.Bottom;
+            chart.Legends[0].Alignment = StringAlignment.Center;
+            chart.Legends[0].Title = title;
+            string seriesname = "MySeriesName";
+            chart.Series.Add(seriesname);
+            chart.Series[seriesname].ChartType = SeriesChartType.Pie;
+            chart.Series[seriesname].Label = "#PERCENT{P1}";
+            chart.Series[seriesname].Points.AddXY("S", value1);
+            chart.Series[seriesname].Points.AddXY("M", value2);
+            chart.Series[seriesname].Points.AddXY("L", value3);
+            chart.Series[0].Points[0].LegendText = "S";
+            chart.Series[0].Points[1].LegendText = "M";
+            chart.Series[0].Points[2].LegendText = "L";
+
+        }
+        
+        
+아래부터 코드임
+        private void cth_up_Click(object sender, EventArgs e)
+        {
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '상의' AND 사이즈 = 'S' ";
+            rdr = cmd.ExecuteReader();
+            int num_us = 0;
+            while (rdr.Read())
+            {
+                num_us += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '상의' AND 사이즈 = 'M' ";
+            rdr = cmd.ExecuteReader();
+            int num_um = 0;
+            while (rdr.Read())
+            {
+                num_um += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '상의' AND 사이즈 = 'L' ";
+            rdr = cmd.ExecuteReader();
+            int num_ul = 0;
+            while (rdr.Read())
+            {
+                num_ul += Int32.Parse(rdr["수량"].ToString());
+            }
+            DrawPieChart_S(chart1, "사이즈별", num_us, num_um, num_ul);
+
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '상의' AND 색상 = '검정' ";
+            rdr = cmd.ExecuteReader();
+            int num_ub = 0;
+            while (rdr.Read())
+            {
+                num_ub += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '상의' AND 색상 = '빨강' ";
+            rdr = cmd.ExecuteReader();
+            int num_ur = 0;
+            while (rdr.Read())
+            {
+                num_ur += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '상의' AND 색상 = '흰색' ";
+            rdr = cmd.ExecuteReader();
+            int num_uw = 0;
+            while (rdr.Read())
+            {
+                num_uw += Int32.Parse(rdr["수량"].ToString());
+            }
+            DrawPieChart_C(chart2, "색상별", num_ub, num_ur, num_uw);
+
+
+
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '상의' AND 재질 = '면' ";
+            rdr = cmd.ExecuteReader();
+            int num_uc = 0;
+            while (rdr.Read())
+            {
+                num_uc += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '상의' AND 재질 = '청' ";
+            rdr = cmd.ExecuteReader();
+            int num_uj = 0;
+            while (rdr.Read())
+            {
+                num_uj += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '상의' AND 재질 = '폴리' ";
+            rdr = cmd.ExecuteReader();
+            int num_up = 0;
+            while (rdr.Read())
+            {
+                num_up += Int32.Parse(rdr["수량"].ToString());
+            }
+            DrawPieChart_M(chart3, "소재별", num_uc, num_uj, num_up);
+
+
+
+        }
+
+        private void cth_do_Click(object sender, EventArgs e)
+        {
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '하의' AND 사이즈 = 'S' ";
+            rdr = cmd.ExecuteReader();
+            int num_ds = 0;
+            while (rdr.Read())
+            {
+                num_ds += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '하의' AND 사이즈 = 'M' ";
+            rdr = cmd.ExecuteReader();
+            int num_dm = 0;
+            while (rdr.Read())
+            {
+                num_dm += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '하의' AND 사이즈 = 'L' ";
+            rdr = cmd.ExecuteReader();
+            int num_dl = 0;
+            while (rdr.Read())
+            {
+                num_dl += Int32.Parse(rdr["수량"].ToString());
+            }
+            DrawPieChart_S(chart1, "사이즈별", num_ds, num_dm, num_dl);
+
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '하의' AND 색상 = '검정' ";
+            rdr = cmd.ExecuteReader();
+            int num_db = 0;
+            while (rdr.Read())
+            {
+                num_db += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '하의' AND 색상 = '빨강' ";
+            rdr = cmd.ExecuteReader();
+            int num_dr = 0;
+            while (rdr.Read())
+            {
+                num_dr += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '하의' AND 색상 = '흰색' ";
+            rdr = cmd.ExecuteReader();
+            int num_dw = 0;
+            while (rdr.Read())
+            {
+                num_dw += Int32.Parse(rdr["수량"].ToString());
+            }
+            DrawPieChart_C(chart2, "색상별", num_db, num_dr, num_dw);
+
+
+
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '하의' AND 재질 = '면' ";
+            rdr = cmd.ExecuteReader();
+            int num_dc = 0;
+            while (rdr.Read())
+            {
+                num_dc += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '하의' AND 재질 = '청' ";
+            rdr = cmd.ExecuteReader();
+            int num_dj = 0;
+            while (rdr.Read())
+            {
+                num_dj += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '하의' AND 재질 = '폴리' ";
+            rdr = cmd.ExecuteReader();
+            int num_dp = 0;
+            while (rdr.Read())
+            {
+                num_dp += Int32.Parse(rdr["수량"].ToString());
+            }
+            DrawPieChart_M(chart3, "소재별", num_dc, num_dj, num_dp);
+
+        }
+
+        private void cth_out_Click(object sender, EventArgs e)
+        {
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '외투' AND 사이즈 = 'S' ";
+            rdr = cmd.ExecuteReader();
+            int num_os = 0;
+            while (rdr.Read())
+            {
+                num_os += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '외투' AND 사이즈 = 'M' ";
+            rdr = cmd.ExecuteReader();
+            int num_om = 0;
+            while (rdr.Read())
+            {
+                num_om += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '외투' AND 사이즈 = 'L' ";
+            rdr = cmd.ExecuteReader();
+            int num_ol = 0;
+            while (rdr.Read())
+            {
+                num_ol += Int32.Parse(rdr["수량"].ToString());
+            }
+            DrawPieChart_S(chart1, "사이즈별", num_os, num_om, num_ol);
+
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '외투' AND 색상 = '검정' ";
+            rdr = cmd.ExecuteReader();
+            int num_ob = 0;
+            while (rdr.Read())
+            {
+                num_ob += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '외투' AND 색상 = '빨강' ";
+            rdr = cmd.ExecuteReader();
+            int num_or = 0;
+            while (rdr.Read())
+            {
+                num_or += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '외투' AND 색상 = '흰색' ";
+            rdr = cmd.ExecuteReader();
+            int num_ow = 0;
+            while (rdr.Read())
+            {
+                num_ow += Int32.Parse(rdr["수량"].ToString());
+            }
+            DrawPieChart_C(chart2, "색상별", num_ob, num_or, num_ow);
+
+
+
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '외투' AND 재질 = '면' ";
+            rdr = cmd.ExecuteReader();
+            int num_oc = 0;
+            while (rdr.Read())
+            {
+                num_oc += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '외투' AND 재질 = '청' ";
+            rdr = cmd.ExecuteReader();
+            int num_oj = 0;
+            while (rdr.Read())
+            {
+                num_oj += Int32.Parse(rdr["수량"].ToString());
+            }
+            cmd.CommandText = "select 수량 from ORDER_ALL WHERE 옷종류 = '외투' AND 재질 = '폴리' ";
+            rdr = cmd.ExecuteReader();
+            int num_op = 0;
+            while (rdr.Read())
+            {
+                num_op += Int32.Parse(rdr["수량"].ToString());
+            }
+            DrawPieChart_M(chart3, "소재별", num_oc, num_oj, num_op);
+
+        }
