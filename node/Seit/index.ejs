@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+        <title>doc</title>
+        <link rel = "stylesheet" type="text/css" href="listmain.css">
+</head>
+<body>  
+    <section id = "main">
+        <h2 id="board_title">자유 게시판</h2>
+    <div id="total_search">
+        <div id = "total">게시물 단 하나!</div>
+        <div id = "search">
+         <div id = "select_img"><img src="3.PNG"></div>
+         <div id = "search_select">
+            <select>
+                <option>제목</option>
+                <option>내용</option>
+                <option>글쓴이</option>
+            </select>
+         </div>
+         <div id = "search_input"><input type="text"></div>
+         <div id = "search_btn"><img src="3.PNG"></div>
+         </div>
+    </div>
+    <table>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>일시</th>
+            <th>조회수</th>
+        </tr>
+        <tr>
+            <td class="col1">1</td>
+            <td class="col2"><a><%= title  %></a></td>
+            <td class="col3"><%= name  %></td>
+            <td class="col4">2022-09-02</td>
+            <td class="col5">20</td>
+        </tr>
+    </table>
+    <div id = "buttons">
+        <div class="col1">< 이전 1 다음 ></div>
+        <div class="col2">
+            <img src="3.PNG">
+        </div>
+    </div>
+</section>
+</body>    
+</html>
