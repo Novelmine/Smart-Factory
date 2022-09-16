@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <h2>주문하기</h2>
+        <table border="1">
+            <tr>
+                <td>아이디</td>
+                <td>이름</td>
+                <td>상품명</td>
+                <td>시간</td>
+            </tr>
+    
+            <% for (var i=0; i<data.length; i++){%>
+                <tr>
+                <td><%= data[i].id%></td>
+                <td><%= data[i].name%></td>
+                <td><%= data[i].product%></td>
+                <td><%= data[i].buytime%></td>
+                 </tr>
+            <% }%>
+        </div>
+        <a href="http://localhost:3000">
+        <input type="button" value="확인">
+        </a>
+</body>
+</html>
