@@ -1,0 +1,462 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>pdh</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="static/assets/css/main.css" />
+	
+	
+		<!-- 차트 링크 -->
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<div id="header">
+
+				<div class="top">
+
+					<!-- Logo -->
+						<div id="logo">
+							<span class="image avatar48"><img src="static/images/logo2.png" style = "width: 80px; height: 80px;"  alt="" /></span>
+							<h3 id="title">시장</h3>
+							<p>원자재 시장</p>
+						</div>
+					
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="#통계"  id="top-link"><span class="icon solid fa-chart-pie" style="font-size: 30px;">통계</span></a></li>
+								<li><a href="#그래프" id="차트보기-link"><span class="icon solid fa-chart-line"style="font-size: 30px;">그래프</span></a></li>
+								<li><a href="#관련자료" id="about-link"><span class="icon solid fa-newspaper"style="font-size: 30px;">관련자료</span></a></li>
+								<li><a href="#게시판" id="contact-link"><span class="icon solid fa-comments"style="font-size: 30px;">게시판</span></a></li>
+							</ul>
+						</nav>
+						
+				</div>
+				
+				<div class="bottom">
+
+				</div>
+
+			</div>
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- Intro -->
+					<section id="통계" class="one dark cover" style="padding-bottom:30%;">
+						<div class="container" >
+
+							<header>
+								<h2> 통계 </h2>
+								
+							</header>
+							<tr>
+								<th class="flag">&nbsp;</th>
+								<!--
+									// 위아래 버튼 아이콘
+								<th class="left noWrap elp pointer" data-col-caption="Commodity" data-col-name="shortname">상품<span sort_default="" class="headerSortDefault newSiteIconsSprite"></span></th>
+								<th class="left pointer" data-col-caption="Month" data-col-name="future_leading_contract_exp_shortdate"> 월물 <span sort_default="" class="headerSortUp newSiteIconsSprite"></span></th>
+								<th>종가</th>
+								<th>고가</th>
+								<th>저가</th>
+								<th>변동</th>
+								<th class="pointer" data-col-caption="Chg. %" data-col-name="pair_change_percent">변동 %<span sort_default="" class="headerSortDefault newSiteIconsSprite"></span></th>
+								<th class="pointer" data-col-caption="Time" data-col-name="shown_datetime">시간<span sort_default="" class="headerSortDefault newSiteIconsSprite"></span></th>
+								-->
+
+								<th class="icon pointer"></th>
+								</tr>
+								</thead>
+								
+								<div id="cross_rates_container" class="js-ga-on-sort" ga-first-column-name="Commodity">
+									<script>
+										loader(['plusLoader']).ready(function (plusLoader) {
+											if (window.PlusIcons) {
+												PlusIcons($('.js-plus-icon'));
+											} else if (plusLoader) {
+												plusLoader.ready();
+											}
+										});
+									</script>
+									<table class="genTbl closedTbl crossRatesTbl" id="cross_rate_1" tablesorter="">
+									<thead>
+									<tr>
+									
+									<th class="left noWrap elp pointer" data-col-caption="Commodity" data-col-name="shortname">상품<span sort_default="" class="headerSortDefault newSiteIconsSprite"></span></th>
+									<th class="left pointer" data-col-caption="Month" data-col-name="future_leading_contract_exp_shortdate"> 전일날짜 <span sort_default="" class="headerSortUp newSiteIconsSprite"></span></th>									
+									<th>종가</th>
+									<th>고가</th>
+									<th>저가</th>
+							
+									</tr>
+									</thead>
+									<tbody>	
+									
+										<% for(var i=0; i<data1.length; i++){%>
+											<tr>
+												<td><%= data1[i].name%></td>
+												<td><%= data1[i].date%></td>
+												<td><%= data1[i].price%></td>
+												<td><%= data1[i].max%></td>
+												<td><%= data1[i].min%></td>
+
+											</tr>
+										<% }%>
+									</tbody>
+									</table>
+									</div>
+
+
+						</div>
+					</section>
+
+				<!-- Portfolio -->
+				<section id="그래프" class="two" style="padding-bottom:27%;">
+					<div class="container">
+						<div class="list_option" style="text-align: left;">                    
+							<form method="post" style="display: inline;">
+								<td >품목 :</td>
+								<select class="selectsubject" name="selectbox_s" onchange="chageLangSelect()" aria-labelledby="new"
+								style="display: inline; width: 200px; height:60px; font-size:20px; ">  
+								<option value="10"  selected="selected" >알루미늄</option>
+								<option value="20">납</option>
+								<option value="30">아연</option>
+								<option value="40">구리</option>
+								<option value="50">주석</option>
+								<option value="60">니켈</option>
+								</select>
+								<td>기간 :</td>
+								<select class="selectday" name="selectbox_d" onchange="chageLangSelect()"  aria-labelledby="new"
+									style="display: inline; width: 200px; height:60px; font-size:20px; ">
+								<option value="10"  selected="selected" >월</option>
+								<option value="20">년</option>
+								</select>
+							</form>
+						</div>
+						<!-- 소스 그래프 삽입 위치 입니다.-->
+						<div class="container">
+							<canvas id="chart_m" class="new"></canvas>
+						  </div>
+						  <!-- 차트 -->
+						  <script>
+							var ctx = document.getElementById('chart_m').getContext('2d');
+							var chart = new Chart(ctx, {
+							  // 챠트 종류를 선택
+							  type: 'line',
+							  // 챠트를 그릴 데이타
+							  data: {
+								labels: ['버튼을 입력해주세요'],
+								datasets: [{
+								  label: 'TON/USD',
+								  backgroundColor: 'transparent',
+								  borderColor: 'blue',
+								  data: ['1']
+								}]
+							  },
+							  // 옵션
+							  options: {
+								elements: {
+									line: {
+										tension: 0 
+									}
+								},
+							  }
+							});
+						  </script>
+							<!-- 상입 종료 지점 입니다.-->
+
+							
+						</div>
+					</section>
+
+				<!-- About Me -->
+					<section id="관련자료" class="three" style="padding-bottom:30%;">
+						
+
+						<div class="container">
+							<nav class="navbar"  style="background-color: #c8d7ff;">
+								<div class="container-fluid">
+								<a class="navbar-brand" >관련 뉴스 (클릭시 해당 뉴스로 이동합니다.)</a>
+								
+								</div>
+							</nav>
+							<table class="table table-info table-hover" >            
+								<thead class="table-dark">
+								 <tr>
+									 <th scope="col">목차</th>
+									 <th scope="col">제목</th>                                    
+								 </tr>
+								</thead>
+								  
+							 <tbody>
+								 <% for(var i=0; i<data.length; i++){%>
+									 <tr>
+										 <td><%= data[i].Num%></td>
+										 <td onclick="window.open('<%= data[i].Link%>')"><%= data[i].Title%></td>  
+									 </tr>
+								 <% }%>
+							 </tbody>   
+							  
+							
+							 </table>
+					</section>
+
+				<!-- Contact -->
+					<section id="게시판" class="four" style="padding-bottom:30%;">
+						<div class="container">
+							<style>
+								textarea{
+									width:500px; 
+									height:100px; 
+									resize:none;
+								}
+							</style>
+							<nav class="navbar"  style="background-color: #e3f2fd;">
+								<div class="container-fluid">
+								  <a class="navbar-brand" >게시판</a>
+								</div>
+							</nav>
+						
+							<FORM action="/board_insert" method="post">
+								<INPUT TYPE="text" name="name"  class="form-control mt-4 mb-2" placeholder="이름을 입력해 주세요.(최대 5자)"maxlength="5" style="width:500px; " required> <p></p>
+								<INPUT TYPE="text" name="title" class="form-control mt-4 mb-2" placeholder="제목을 입력해 주세요. (최대 20자)" maxlength="20" style="width:500px; "  required> <p></p>
+								<TEXTAREA id="content" name="content"  class="form-control mt-4 mb-2" cols="30" rows="10" placeholder="내용을 입력해 주세요.(최대 100자)" maxlength="100" required></TEXTAREA>
+							  
+								<button type="submit" class="btn btn-primary active">제출하기</button>
+								
+							</FORM>
+
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<div id="footer">
+
+				<!-- Copyright -->
+					<ul class="copyright">
+						<li>&copy; Untitled. All rights reserved.</li><li>자료 출처: <a href="https://www.kprc.or.kr/RawMaterial.do?lcla_cd=0100&mcla_cd=50&page=1&page_sz=10&board_id=raw01&itemst_cd=0100&item_cd=0010&to_yyyymm=&from_yyyymm=&board=0#con01" target='_blank'>한국 물가 협회</a></li>
+					</ul>
+
+			</div>
+
+		<!-- Scripts -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  		  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+   		 crossorigin="anonymous"></script>
+ 		 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  		  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+   		 crossorigin="anonymous"></script>
+  		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+ 		 integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+   		 crossorigin="anonymous"></script>
+		<script src="static/assets/js/jquery.min.js"></script>
+		<script src="static/assets/js/jquery.scrolly.min.js"></script>
+		<script src="static/assets/js/jquery.scrollex.min.js"></script>
+		<script src="static/assets/js/browser.min.js"></script>
+		<script src="static/assets/js/breakpoints.min.js"></script>
+		<script src="static/assets/js/util.js"></script>
+		<script src="static/assets/js/main.js"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<script>
+			function chageLangSelect(){
+				var myData  = <%- JSON.stringify(Alu) %> ;
+
+				var langSelect_s = document.getElementsByName("selectbox_s");
+				// select element에서 선택된 option의 value가 저장된다.
+				var selectValue_s = langSelect_s[0].value;
+				var langSelect = document.getElementsByName("selectbox_d");
+				// select element에서 선택된 option의 value가 저장된다.
+				var selectValue_d = langSelect[0].value;
+				// 알루미늄 주간
+
+				if(selectValue_s == 10 && selectValue_d == 10)
+				{
+					myData  = <%- JSON.stringify(Alu) %> 
+					var name_obj = []
+					var price_obj = []
+	
+					for(var i = 22; i>=0; i--){
+						price_obj.push(myData[i].Price)
+						name_obj.push(myData[i].Date)
+					}	
+					chart.data.labels = name_obj ;
+					chart.data.datasets[0].data = price_obj;
+					chart.update();
+				}
+				// 알루미늄 년간
+				if(selectValue_s == 10 && selectValue_d == 20)
+				{
+					myData  = <%- JSON.stringify(Alu) %> 
+					var name_obj = []
+					var price_obj = []
+	
+					for(var i = myData.length -1 ; i>=0; i--){
+						price_obj.push(myData[i].Price)
+						name_obj.push(myData[i].Date)
+					}	
+					chart.data.labels = name_obj ;
+					chart.data.datasets[0].data = price_obj;
+					chart.update();
+				}
+				// 납 주간
+				if(selectValue_s == 20 && selectValue_d == 10)
+				{
+					myData  = <%- JSON.stringify(Lead) %> 
+					var name_obj = []
+					var price_obj = []
+	
+					for(var i = 22; i>=0; i--){
+						price_obj.push(myData[i].Price)
+						name_obj.push(myData[i].Date)
+					}	
+					chart.data.labels = name_obj ;
+					chart.data.datasets[0].data = price_obj;
+					chart.update();
+				}
+				// 납 년간
+				if(selectValue_s == 20 && selectValue_d == 20)
+				{
+					myData  = <%- JSON.stringify(Lead) %> 
+					var name_obj = []
+					var price_obj = []
+	
+					for(var i = myData.length -1 ; i>=0; i--){
+						price_obj.push(myData[i].Price)
+						name_obj.push(myData[i].Date)
+					}	
+					chart.data.labels = name_obj ;
+					chart.data.datasets[0].data = price_obj;
+					chart.update();
+				}
+				// 아연 주간
+				if(selectValue_s == 30 && selectValue_d == 10)
+				{
+					myData  = <%- JSON.stringify(Zinc) %> 
+					var name_obj = []
+					var price_obj = []
+	
+					for(var i = 22; i>=0; i--){
+						price_obj.push(myData[i].Price)
+						name_obj.push(myData[i].Date)
+					}	
+					chart.data.labels = name_obj ;
+					chart.data.datasets[0].data = price_obj;
+					chart.update();
+				}
+				//아연 년간
+				if(selectValue_s == 30 && selectValue_d ==20)
+				{
+					myData  = <%- JSON.stringify(Zinc) %> 
+					var name_obj = []
+					var price_obj = []
+	
+					for(var i = myData.length -1 ; i>=0; i--){
+						price_obj.push(myData[i].Price)
+						name_obj.push(myData[i].Date)
+					}	
+					chart.data.labels = name_obj ;
+					chart.data.datasets[0].data = price_obj;
+					chart.update();
+				}
+				// 구리 주간
+				if(selectValue_s == 40 && selectValue_d == 10)
+				{
+					myData  = <%- JSON.stringify(Copper) %> 
+					var name_obj = []
+					var price_obj = []
+	
+					for(var i = 22; i>=0; i--){
+						price_obj.push(myData[i].Price)
+						name_obj.push(myData[i].Date)
+					}	
+					chart.data.labels = name_obj ;
+					chart.data.datasets[0].data = price_obj;
+					chart.update();
+				}
+				// 구리 년간
+				if(selectValue_s == 40 && selectValue_d == 20)
+				{
+					myData  = <%- JSON.stringify(Copper) %> 
+					var name_obj = []
+					var price_obj = []
+	
+					for(var i = myData.length -1 ; i>=0; i--){
+						price_obj.push(myData[i].Price)
+						name_obj.push(myData[i].Date)
+					}	
+					chart.data.labels = name_obj ;
+					chart.data.datasets[0].data = price_obj;
+					chart.update();
+				}
+				// 주석 주간
+				if(selectValue_s == 50 && selectValue_d == 10)
+				{
+					myData  = <%- JSON.stringify(Tin) %> 
+					var name_obj = []
+					var price_obj = []
+	
+					for(var i = 22; i>=0; i--){
+						price_obj.push(myData[i].Price)
+						name_obj.push(myData[i].Date)
+					}	
+					chart.data.labels = name_obj ;
+					chart.data.datasets[0].data = price_obj;
+					chart.update();
+				}
+				// 주석 년간
+				if(selectValue_s == 50 && selectValue_d == 20)
+				{
+					myData  = <%- JSON.stringify(Tin) %> 
+					var name_obj = []
+					var price_obj = []
+	
+					for(var i = myData.length -1 ; i>=0; i--){
+						price_obj.push(myData[i].Price)
+						name_obj.push(myData[i].Date)
+					}	
+					chart.data.labels = name_obj ;
+					chart.data.datasets[0].data = price_obj;
+					chart.update();
+				}
+				// 니켈 주간 
+				if(selectValue_s == 60 && selectValue_d == 10)
+				{
+					myData  = <%- JSON.stringify(Nickel) %> 
+					var name_obj = []
+					var price_obj = []
+	
+					for(var i = 22; i>=0; i--){
+						price_obj.push(myData[i].Price)
+						name_obj.push(myData[i].Date)
+					}	
+					chart.data.labels = name_obj ;
+					chart.data.datasets[0].data = price_obj;
+					chart.update();
+				}
+				// 니켈 년간
+				if(selectValue_s == 60 && selectValue_d == 20)
+				{
+					myData  = <%- JSON.stringify(Nickel) %> 
+					var name_obj = []
+					var price_obj = []
+	
+					for(var i = myData.length -1 ; i>=0; i--){
+						price_obj.push(myData[i].Price)
+						name_obj.push(myData[i].Date)
+					}	
+					chart.data.labels = name_obj ;
+					chart.data.datasets[0].data = price_obj;
+					chart.update();
+				}
+			
+			}
+			</script>
+	</body>
+</html>
