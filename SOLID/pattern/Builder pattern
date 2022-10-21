@@ -14,9 +14,6 @@ public class Bicycle
     }
 }
 
-/// <summary>
-/// The builder abstraction
-/// </summary>
 public interface IBicycleBuilder
 {
     string Colour { get; set; }
@@ -25,9 +22,6 @@ public interface IBicycleBuilder
     Bicycle GetResult();
 }
 
-/// <summary>
-/// Concrete builder implementation
-/// </summary>
 public class GTBuilder : IBicycleBuilder
 {
     public string Colour { get; set; }
@@ -39,9 +33,6 @@ public class GTBuilder : IBicycleBuilder
     }
 }
 
-/// <summary>
-/// The director
-/// </summary>
 public class MountainBikeBuildDirector
 {
     private IBicycleBuilder _builder;
