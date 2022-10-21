@@ -1,67 +1,110 @@
-public class Bicycle
-{
-    public string Make { get; set; }
-    public string Model { get; set; }
-    public int Height { get; set; }
-    public string Colour { get; set; }
+using System;
+using System.Collections.Generic;
 
-    public Bicycle(string make, string model, string colour, int height)
+namespace DoFactory.GangOfFour.Builder.Structural
+{
+
+
+    public class MainApp
     {
-        Make = make;
-        Model = model;
-        Colour = colour;
-        Height = height;
-    }
-}
 
-public interface IBicycleBuilder
-{
-    string Colour { get; set; }
-    int Height { get; set; }
 
-    Bicycle GetResult();
-}
+        public static void Main()
+        {
 
-public class GTBuilder : IBicycleBuilder
-{
-    public string Colour { get; set; }
-    public int Height { get; set; }
+            Director director = new Director();
 
-    public Bicycle GetResult()
-    {
-        return Height == 29 ? new Bicycle("GT", "Avalanche", Colour, Height) : null;        
-    }
-}
+            Builder b1 = new ConcreteBuilder1();
+            Builder b2 = new ConcreteBuilder2();
 
-public class MountainBikeBuildDirector
-{
-    private IBicycleBuilder _builder;
-    public MountainBikeBuildDirector(IBicycleBuilder builder) 
-    {
-        _builder = builder;
+            director.Construct(b1);
+            Product p1 = b1.GetResult();
+            p1.Show();
+
+            director.Construct(b2);
+            Product p2 = b2.GetResult();
+            p2.Show();
+
+            Console.ReadKey();
+        }
     }
 
-    public void Construct()
+
+    class Director
     {
-        _builder.Colour = "Red";
-        _builder.Height = 29;
+        // Builder uses a complex series of steps
+
+        public void Construct(Builder builder)
+        {
+            builder.BuildPartA();
+            builder.BuildPartB();
+        }
     }
 
-    public Bicycle GetResult()
-	{
-		return this._builder.GetResult();
-	}
-}
 
-public class Client
-{
-    public void DoSomethingWithBicycles()
+    abstract class Builder
     {
-        var builder = new GTBuilder();
-        var director = new MountainBikeBuildDirector(builder);
+        public abstract void BuildPartA();
+        public abstract void BuildPartB();
+        public abstract Product GetResult();
+    }
 
-        // Director controls the stepwise creation of product and returns the result.
-        director.Construct();
-        Bicycle myMountainBike = director.GetResult();
+
+    class ConcreteBuilder1 : Builder
+    {
+        private Product _product = new Product();
+
+        public override void BuildPartA()
+        {
+            _product.Add("PartA");
+        }
+
+        public override void BuildPartB()
+        {
+            _product.Add("PartB");
+        }
+
+        public override Product GetResult()
+        {
+            return _product;
+        }
+    }
+
+
+    class ConcreteBuilder2 : Builder
+    {
+        private Product _product = new Product();
+
+        public override void BuildPartA()
+        {
+            _product.Add("PartX");
+        }
+
+        public override void BuildPartB()
+        {
+            _product.Add("PartY");
+        }
+
+        public override Product GetResult()
+        {
+            return _product;
+        }
+    }
+
+    class Product
+    {
+        private List<string> _parts = new List<string>();
+
+        public void Add(string part)
+        {
+            _parts.Add(part);
+        }
+
+        public void Show()
+        {
+            Console.WriteLine("\nProduct Parts -------");
+            foreach (string part in _parts)
+                Console.WriteLine(part);
+        }
     }
 }
