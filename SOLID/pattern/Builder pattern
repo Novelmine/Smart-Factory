@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace DoFactory.GangOfFour.Builder.Structural
+namespace DoFactory.GangOfFour.Builder.RealWorld
 {
-
 
     public class MainApp
     {
@@ -11,100 +10,173 @@ namespace DoFactory.GangOfFour.Builder.Structural
 
         public static void Main()
         {
+            VehicleBuilder builder;
 
-            Director director = new Director();
+            Shop shop = new Shop();
 
-            Builder b1 = new ConcreteBuilder1();
-            Builder b2 = new ConcreteBuilder2();
+            builder = new ScooterBuilder();
+            shop.Construct(builder);
+            builder.Vehicle.Show();
 
-            director.Construct(b1);
-            Product p1 = b1.GetResult();
-            p1.Show();
+            builder = new CarBuilder();
+            shop.Construct(builder);
+            builder.Vehicle.Show();
 
-            director.Construct(b2);
-            Product p2 = b2.GetResult();
-            p2.Show();
+            builder = new MotorCycleBuilder();
+            shop.Construct(builder);
+            builder.Vehicle.Show();
 
             Console.ReadKey();
         }
     }
 
-
-    class Director
+    class Shop
     {
         // Builder uses a complex series of steps
 
-        public void Construct(Builder builder)
+        public void Construct(VehicleBuilder vehicleBuilder)
         {
-            builder.BuildPartA();
-            builder.BuildPartB();
+            vehicleBuilder.BuildFrame();
+            vehicleBuilder.BuildEngine();
+            vehicleBuilder.BuildWheels();
+            vehicleBuilder.BuildDoors();
+        }
+    }
+
+    abstract class VehicleBuilder
+    {
+        protected Vehicle vehicle;
+
+        // Gets vehicle instance
+
+        public Vehicle Vehicle
+        {
+            get { return vehicle; }
+        }
+
+        // Abstract build methods
+
+        public abstract void BuildFrame();
+        public abstract void BuildEngine();
+        public abstract void BuildWheels();
+        public abstract void BuildDoors();
+    }
+
+
+    class MotorCycleBuilder : VehicleBuilder
+    {
+        public MotorCycleBuilder()
+        {
+            vehicle = new Vehicle("MotorCycle");
+        }
+
+        public override void BuildFrame()
+        {
+            vehicle["frame"] = "MotorCycle Frame";
+        }
+
+        public override void BuildEngine()
+        {
+            vehicle["engine"] = "500 cc";
+        }
+
+        public override void BuildWheels()
+        {
+            vehicle["wheels"] = "2";
+        }
+
+        public override void BuildDoors()
+        {
+            vehicle["doors"] = "0";
         }
     }
 
 
-    abstract class Builder
+    class CarBuilder : VehicleBuilder
     {
-        public abstract void BuildPartA();
-        public abstract void BuildPartB();
-        public abstract Product GetResult();
+        public CarBuilder()
+        {
+            vehicle = new Vehicle("Car");
+        }
+
+        public override void BuildFrame()
+        {
+            vehicle["frame"] = "Car Frame";
+        }
+
+        public override void BuildEngine()
+        {
+            vehicle["engine"] = "2500 cc";
+        }
+
+        public override void BuildWheels()
+        {
+            vehicle["wheels"] = "4";
+        }
+
+        public override void BuildDoors()
+        {
+            vehicle["doors"] = "4";
+        }
     }
 
 
-    class ConcreteBuilder1 : Builder
+    class ScooterBuilder : VehicleBuilder
     {
-        private Product _product = new Product();
-
-        public override void BuildPartA()
+        public ScooterBuilder()
         {
-            _product.Add("PartA");
+            vehicle = new Vehicle("Scooter");
         }
 
-        public override void BuildPartB()
+        public override void BuildFrame()
         {
-            _product.Add("PartB");
+            vehicle["frame"] = "Scooter Frame";
         }
 
-        public override Product GetResult()
+        public override void BuildEngine()
         {
-            return _product;
+            vehicle["engine"] = "50 cc";
+        }
+
+        public override void BuildWheels()
+        {
+            vehicle["wheels"] = "2";
+        }
+
+        public override void BuildDoors()
+        {
+            vehicle["doors"] = "0";
         }
     }
 
 
-    class ConcreteBuilder2 : Builder
+    class Vehicle
     {
-        private Product _product = new Product();
+        private string _vehicleType;
+        private Dictionary<string, string> _parts =
+          new Dictionary<string, string>();
 
-        public override void BuildPartA()
+
+        public Vehicle(string vehicleType)
         {
-            _product.Add("PartX");
+            this._vehicleType = vehicleType;
         }
 
-        public override void BuildPartB()
-        {
-            _product.Add("PartY");
-        }
 
-        public override Product GetResult()
+        public string this[string key]
         {
-            return _product;
-        }
-    }
-
-    class Product
-    {
-        private List<string> _parts = new List<string>();
-
-        public void Add(string part)
-        {
-            _parts.Add(part);
+            get { return _parts[key]; }
+            set { _parts[key] = value; }
         }
 
         public void Show()
         {
-            Console.WriteLine("\nProduct Parts -------");
-            foreach (string part in _parts)
-                Console.WriteLine(part);
+            Console.WriteLine("\n---------------------------");
+            Console.WriteLine("Vehicle Type: {0}", _vehicleType);
+            Console.WriteLine(" Frame : {0}", _parts["frame"]);
+            Console.WriteLine(" Engine : {0}", _parts["engine"]);
+            Console.WriteLine(" #Wheels: {0}", _parts["wheels"]);
+            Console.WriteLine(" #Doors : {0}", _parts["doors"]);
         }
     }
 }
