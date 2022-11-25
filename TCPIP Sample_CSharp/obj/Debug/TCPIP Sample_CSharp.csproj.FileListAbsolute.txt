@@ -1,0 +1,12 @@
+C:\Users\japgo\OneDrive\스마트 팩토리\스마트 팩토리 과정\2022 ANU -\ANU-SmartFactory-2022\src\참고 코드\TCPIP Sample_CSharp\bin\Debug\TCPIP Sample_CSharp.exe.config
+C:\Users\Admin\Desktop\TCPIP Sample_CSharp\bin\Debug\TCPIP Sample_CSharp.exe.config
+C:\Users\Admin\Desktop\TCPIP Sample_CSharp\bin\Debug\TCPIP Sample_CSharp.exe
+C:\Users\Admin\Desktop\TCPIP Sample_CSharp\bin\Debug\TCPIP Sample_CSharp.pdb
+C:\Users\Admin\Desktop\TCPIP Sample_CSharp\obj\Debug\TCPIP Sample_CSharp.csproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\TCPIP Sample_CSharp\obj\Debug\TCPIP Sample_CSharp.csproj.SuggestedBindingRedirects.cache
+C:\Users\Admin\Desktop\TCPIP Sample_CSharp\obj\Debug\TCPIP_Sample_CSharp.main.resources
+C:\Users\Admin\Desktop\TCPIP Sample_CSharp\obj\Debug\TCPIP_Sample_CSharp.Properties.Resources.resources
+C:\Users\Admin\Desktop\TCPIP Sample_CSharp\obj\Debug\TCPIP Sample_CSharp.csproj.GenerateResource.cache
+C:\Users\Admin\Desktop\TCPIP Sample_CSharp\obj\Debug\TCPIP Sample_CSharp.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\TCPIP Sample_CSharp\obj\Debug\TCPIP Sample_CSharp.exe
+C:\Users\Admin\Desktop\TCPIP Sample_CSharp\obj\Debug\TCPIP Sample_CSharp.pdb
